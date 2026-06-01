@@ -8,10 +8,18 @@
   height: 100vh;
   .login-container {
     width: 400px;
-    height: 100%;
+    /* height: 100%; */
     margin: 0 auto;
     border-radius: 10px;
     background-color: white;
+    /* height: auto; */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    height: 450px;
     .login-content {
       padding: 5px;
       .text-login {
@@ -22,6 +30,15 @@
       }
       .login-input {
         margin: 7px 0;
+        .custom-input-password {
+          position: relative;
+          i {
+            position: absolute;
+            right: 5px;
+            top: 10px;
+            cursor: pointer;
+          }
+        }
       }
       .btn-login {
         width: 100%;
