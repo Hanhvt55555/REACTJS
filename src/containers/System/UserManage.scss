@@ -48,3 +48,14 @@ button.btn-delete {
     color: rgb(235, 22, 22) !important;
   }
 }
+
+.modal-user-container {
+  .modal-title {
+    button {
+      background: transparent !important;
+      border: none !important;
+      color: white;
+      font-size: 27px;
+    }
+  }
+}
