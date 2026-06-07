@@ -3,49 +3,41 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { emitter } from "../../utils/emitter";
-class ModalUser extends Component {
+import _ from "lodash"; // thư viện hỗ trợ so sánh 2 object có giống nhau hay không
+class ModalEditUser extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.state = {
+      id: "",
       email: "",
       password: "",
       firstName: "",
       lastName: "",
       address: "",
     };
-    this.listenToEmitter();
   }
-  listenToEmitter() {
-    emitter.on("EVENT_CLEAR_MODAL_DATA", () => {
-      this.setState({
-        email: "",
-        password: "", 
-        firstName: "",
-      lastName: "",
-      address: "",
-    });
-    })}
 
   componentDidMount() {
-    console.log("mouting modal");
+    let user = this.props.currentUser;
+    if (user && !_.isEmpty(user)) {
+      this.setState({
+        id: user.id,
+        email: user.email,
+        password: "hardcode",
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+      });
+    }
+    //let {currentUser} = this.props;
+    console.log("didmount edit modal", this.props.currentUser);
   }
   toggle = () => {
     this.props.toggleFromParent();
   };
 
   handleOnChangeInput = (event, id) => {
-    //bad code: modified state directly
-    // this.state[id] = event.target.value;
-    // this.setState(
-    //   {
-    //     ...this.state,
-    //   },
-    //   () => {
-    //     console.log("check state input", this.state);
-    //   },
-    // );
-
     //good code
     let copyState = { ...this.state };
     //console.log("check copy state", copyState);
@@ -59,13 +51,7 @@ class ModalUser extends Component {
 
   checkValidateInput = () => {
     let isValid = true;
-    let arrInput = [
-      "email",
-      "password",
-      "firstName",
-      "lastName",
-      "address",
-    ];
+    let arrInput = ["email", "password", "firstName", "lastName", "address"];
     for (let i = 0; i < arrInput.length; i++) {
       console.log("check state input", this.state[arrInput[i]], arrInput[i]);
       if (!this.state[arrInput[i]]) {
@@ -78,20 +64,19 @@ class ModalUser extends Component {
     return isValid;
   };
 
-  handleAddNewUser = () => {
+  handleSaveUser = () => {
     let isValid = this.checkValidateInput();
     if (isValid === true) {
-      //call api create modal
-      //   console.log("data input", this.state);
-      this.props.createNewUser(this.state);
-      //console.log("check props from parent", this.props);
+      //call api edit user
+      this.props.editUser(this.state);
     }
   };
 
   render() {
+    console.log("check props from parent; ", this.props);
     return (
       <Modal
-        isOpen={this.props.isOpenModalUser}
+        isOpen={this.props.isOpenModalEditUser}
         toggle={() => {
           this.toggle();
         }}
@@ -104,7 +89,7 @@ class ModalUser extends Component {
             this.toggle();
           }}
         >
-          Create a new user
+          Edit user
         </ModalHeader>
         <ModalBody>
           <div class="container">
@@ -120,6 +105,7 @@ class ModalUser extends Component {
                     this.handleOnChangeInput(event, "email");
                   }}
                   value={this.state.email}
+                  disabled
                 />
               </div>
               <div class="form-group col-md-6">
@@ -133,6 +119,7 @@ class ModalUser extends Component {
                     this.handleOnChangeInput(event, "password");
                   }}
                   value={this.state.password}
+                  disabled
                 />
               </div>
             </div>
@@ -177,63 +164,17 @@ class ModalUser extends Component {
                 value={this.state.address}
               />
             </div>
-            {/* <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputCity">Phone number</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputCity"
-                  name="phonenumber"
-                  onChange={(event) => {
-                    this.handleOnChangeInput(event, "phonenumber");
-                  }}
-                  value={this.state.phonenumber}
-                />
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-3">
-                <label for="inputState">Sex</label>
-                <select
-                  name="gender"
-                  class="form-control"
-                  value={this.state.gender}
-                  onChange={(event) => {
-                    this.handleOnChangeInput(event, "gender");
-                  }}
-                >
-                  <option value="1">Male</option>
-                  <option value="0">Female</option>
-                </select>
-              </div>
-              <div class="form-group col-md-3">
-                <label for="inputZip">Role</label>
-                <select
-                  name="roleId"
-                  class="form-control"
-                  value={this.state.roleId}
-                  onChange={(event) => {
-                    this.handleOnChangeInput(event, "roleId");
-                  }}
-                >
-                  <option value="1">Admin</option>
-                  <option value="2">Doctor</option>
-                  <option value="3">Patient</option>
-                </select>
-              </div>
-            </div>*/}
-          </div> 
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button
             className="px-3"
             color="primary"
             onClick={() => {
-              this.handleAddNewUser();
+              this.handleSaveUser();
             }}
           >
-            Add new
+            Save changes
           </Button>{" "}
           <Button
             className="px-3"
@@ -258,4 +199,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalUser);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalEditUser);
