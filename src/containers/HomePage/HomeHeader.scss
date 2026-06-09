@@ -8,7 +8,6 @@
     display: flex;
     .left-content {
       width: 25%;
-      border: 1px solid green;
       display: flex;
       align-items: center;
 
@@ -18,6 +17,8 @@
         width: 100%;
         cursor: pointer;
         background: url("../../assets/logo.jpeg") center center no-repeat;
+        margin-left: -70px;
+        background-size: 50%;
       }
       i {
         color: grey;
@@ -27,7 +28,6 @@
     }
     .center-content {
       width: 50%;
-      border: 1px solid orange;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -40,10 +40,32 @@
     }
     .right-content {
       width: 25%;
-      border: 1px solid grey;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
+      .support {
+        padding-right: 50px;
+        display: flex;
+        align-items: center;
+        i {
+          font-weight: 500;
+          cursor: pointer;
+          font-size: 15px;
+        }
+      }
+      .language-vi {
+        cursor: pointer;
+        &.active {
+          color: orange;
+        }
+      }
+      .language-en {
+        margin: 0 10px;
+        cursor: pointer;
+        &.active {
+          color: blue;
+        }
+      }
     }
   }
 }
@@ -52,10 +74,14 @@
   height: 500px;
   display: flex;
   flex-direction: column;
+  // background-image: linear-gradient(
+  //   rgba(126, 126, 126, 0.25),
+  //   rgba(255, 255, 255, 0.1)
+  // );
   .content-up {
-    border: 1px solid red;
-    height: 50%;
+    height: 65%;
     padding-top: 15px;
+
     .title1 {
       text-align: center;
       font-size: 30px;
@@ -94,15 +120,21 @@
     }
   }
   .content-down {
-    border: 1px solid greenyellow;
-    height: 50%;
+    height: 35%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background-image: linear-gradient(
+      rgba(158, 219, 239, 1),
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 1)
+    );
     .options {
       text-align: center;
       display: flex;
       gap: 50px;
       justify-content: center;
       .option-child {
-        border: 1px solid blue;
         width: 100px;
         .icon-child {
           background: white;
