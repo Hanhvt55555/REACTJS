@@ -6,6 +6,8 @@ import Specialty from "./Section/Specialty";
 import MedicalFacility from "./Section/MedicalFacility";
 import OutstandingDoctor from "./Section/OutstandingDoctor";
 import HandBook from "./Section/HandBook";
+import About from "./Section/About";
+import HomeFooter from "./Section/HomeFooter";
 import "./HomePage.scss";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -29,6 +31,8 @@ class HomePage extends Component {
         <MedicalFacility settings={settings} />
         <OutstandingDoctor settings={settings} />
         <HandBook settings={settings} />
+        <About />
+        <HomeFooter />
         <div style={{ height: "300px" }}></div>
       </div>
     );

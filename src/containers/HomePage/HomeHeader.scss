@@ -1,6 +1,10 @@
 .home-header-container {
   height: 60px;
   padding: 0 20px;
+  position: fixed;
+  background: white;
+  z-index: 10000;
+  width: 100%;
 
   .home-header-content {
     width: 100%;
@@ -102,7 +106,7 @@
   // );
   .content-up {
     height: 65%;
-    padding-top: 15px;
+    padding-top: 50px;
 
     .title1 {
       text-align: center;
