@@ -27,7 +27,7 @@
       "manage-doctor": "Quản lí bác sĩ",
       "manage-admin": "Quản lí admin",
       "crud": "CRUD user",
-      "crud-redux": "CRUD user",
+      "crud-redux": "CRUD redux",
       "clinic": "Phòng khám",
       "manage-clinic": "Quản lí phòng khám",
       "specialty": "Chuyên khoa",
@@ -35,5 +35,19 @@
       "handbook": "Cẩm nang",
       "manage-handbook": "Quản lí cẩm nang"
     }
+  },
+  "manage-user": {
+    "add": "Thêm mới người dùng",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "first-name": "Tên",
+    "last-name": "Họ",
+    "phone-number": "Số điện thoại",
+    "address": "Địa chỉ",
+    "gender": "Giới tính",
+    "position": "Chức danh",
+    "role": "Vai trò",
+    "image": "Ảnh đại diện",
+    "save": "Lưu"
   }
 }
