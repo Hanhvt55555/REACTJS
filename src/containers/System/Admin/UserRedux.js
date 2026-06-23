@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { getAllCodeService } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
+import * as actions from "../../../store/actions";
 class UserRedux extends Component {
   constructor(props) {
     super(props);
@@ -12,22 +13,35 @@ class UserRedux extends Component {
   }
 
   async componentDidMount() {
-    try {
-      let res = await getAllCodeService("gender");
-      if (res && res.errCode === 0) {
-        this.setState({
-          genderArr: res.data,
-        });
-      }
-      //console.log("hoidanit check:", res);
-    } catch (e) {
-      console.log(e);
+    this.props.getGenderStart();
+    // try {
+    //   let resGender = await getAllCodeService("gender");
+    //   let resRole = await getAllCodeService("role");
+    //   if (resGender && resGender.errCode === 0) {
+    //     this.setState({
+    //       genderArr: resGender.data,
+    //       roleArr: resRole.data,
+    //     });
+    //   }
+    //   console.log("hoidanit check:", resGender, resRole);
+    // } catch (e) {
+    //   console.log(e);
+    // }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.genderRedux != this.props.genderRedux) {
+      this.setState({
+        genderArr: this.props.genderRedux,
+      });
     }
   }
 
   render() {
     let genders = this.state.genderArr;
+    let roles = this.state.roleArr;
     let language = this.props.language;
+    console.log("hxinhgai check props from redux: ", this.props.genderRedux);
     return (
       <div className="user-redux-container">
         <div className="title">Learn user React - Redux Hxinhgai</div>
@@ -96,7 +110,7 @@ class UserRedux extends Component {
                   <FormattedMessage id="manage-user.position" />
                 </label>
                 <select className="form-control">
-                  <option selected>Large select</option>
+                  <option selected></option>
                 </select>
               </div>
               <div className="col-3">
@@ -104,7 +118,17 @@ class UserRedux extends Component {
                   <FormattedMessage id="manage-user.role" />
                 </label>
                 <select className="form-control">
-                  <option selected>Large select</option>
+                  {roles &&
+                    roles.length > 0 &&
+                    roles.map((item, index) => {
+                      return (
+                        <option key={index}>
+                          {language === LANGUAGES.VI
+                            ? item.valueVi
+                            : item.valueEn}
+                        </option>
+                      );
+                    })}
                 </select>
               </div>
               <div className="col-3">
@@ -131,11 +155,17 @@ class UserRedux extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
+    genderRedux: state.admin.genders,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getGenderStart: () => dispatch(actions.fetchGenderStart()),
+    // processLogout: () => dispatch(actions.processLogout()),
+    // changeLanguageAppRedux: (language) =>
+    //   dispatch(actions.changeLanguageApp(language)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRedux);
