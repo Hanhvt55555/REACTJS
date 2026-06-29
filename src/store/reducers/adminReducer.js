@@ -5,6 +5,7 @@ const initialState = {
   genders: [],
   roles: [],
   positions: [],
+  users: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -13,19 +14,19 @@ const adminReducer = (state = initialState, action) => {
     case actionTypes.FETCH_GENDER_START:
       let copyState = { ...state };
       copyState.isLoadingGender = true;
-      console.log("hoidanit fire fetch gender start: ", action);
+      //console.log("hoidanit fire fetch gender start: ", action);
       return {
         ...copyState,
       };
     case actionTypes.FETCH_GENDER_SUCCESS:
       state.genders = action.data;
       state.isLoadingGender = false;
-      console.log("hoidanit fire fetch gender success: ", action);
+      //console.log("hoidanit fire fetch gender success: ", action);
       return {
         ...state,
       };
     case actionTypes.FETCH_GENDER_FAILED:
-      console.log("hoidanit fire fetch gender fail: ", action);
+      //console.log("hoidanit fire fetch gender fail: ", action);
       state.isLoadingGender = false;
       state.genders = [];
       return {
@@ -56,6 +57,20 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+    //Get all users
+    case actionTypes.FETCH_ALL_USERS_SUCCESS:
+      state.users = action.users;
+      return {
+        ...state,
+      };
+
+    case actionTypes.FETCH_ALL_USERS_FAILED:
+      state.users = [];
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
